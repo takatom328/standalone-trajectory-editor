@@ -65,6 +65,10 @@ public:
     
     // 選択管理
     void clearSelection();
+    
+    // 速度テキスト表示制御
+    void setSpeedTextVisible(bool visible);
+    bool isSpeedTextVisible() const { return show_speed_text_; }
 
 signals:
     void pointClicked(size_t index);
@@ -96,13 +100,16 @@ private:
     double line_width_;
     double min_speed_, mid_speed_, max_speed_;
     CoordinateSystem coordinate_system_;  // 座標系モード
+    bool show_speed_text_;  // 速度テキスト表示フラグ
     
     // グラフィックアイテム
     std::vector<QGraphicsEllipseItem*> point_items_;
     std::vector<QGraphicsLineItem*> line_items_;
+    std::vector<QGraphicsTextItem*> speed_text_items_;  // 速度テキスト
     std::vector<QGraphicsEllipseItem*> point_items_2_;  // 2つ目の軌跡の点
     std::vector<QGraphicsLineItem*> line_items_2_;      // 2つ目の軌跡の線
-    std::vector<QGraphicsEllipseItem*> boundary_items_;
+    std::vector<QGraphicsTextItem*> speed_text_items_2_;  // 2つ目の軌跡の速度テキスト
+    std::vector<QGraphicsItem*> boundary_items_;
     
     
     // 編集状態  

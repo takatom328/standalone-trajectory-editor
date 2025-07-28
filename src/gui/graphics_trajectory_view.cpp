@@ -21,6 +21,7 @@ GraphicsTrajectoryView::GraphicsTrajectoryView(QWidget* parent)
     , mid_speed_(20.0)
     , max_speed_(40.0)
     , coordinate_system_(EAST_SOUTH)
+    , show_speed_text_(false)  // デフォルトは非表示
     , edit_mode_(VIEWING)
     , selected_point_index_(SIZE_MAX)
     , dragging_point_index_(SIZE_MAX)
@@ -349,6 +350,12 @@ void GraphicsTrajectoryView::clearScene() {
     }
     line_items_.clear();
     
+    for (auto* item : speed_text_items_) {
+        scene_->removeItem(item);
+        delete item;
+    }
+    speed_text_items_.clear();
+    
     // 2つ目の軌跡アイテムをクリア
     for (auto* item : point_items_2_) {
         scene_->removeItem(item);
@@ -361,6 +368,12 @@ void GraphicsTrajectoryView::clearScene() {
         delete item;
     }
     line_items_2_.clear();
+    
+    for (auto* item : speed_text_items_2_) {
+        scene_->removeItem(item);
+        delete item;
+    }
+    speed_text_items_2_.clear();
     
     // 境界アイテムをクリア
     for (auto* item : boundary_items_) {
@@ -418,8 +431,31 @@ void GraphicsTrajectoryView::createTrajectoryItems() {
         // クリック可能にする
         circle->setFlag(QGraphicsItem::ItemIsSelectable, true);
         circle->setData(0, static_cast<int>(i));  // インデックスを保存
+        circle->setZValue(2);  // テキストより上のレイヤー
         
         point_items_.push_back(circle);
+        
+        // 速度テキストを作成（プロットの左側に表示）
+        QString speed_text = QString::number(point.velocity, 'f', 1);  // 小数点第一位まで
+        QGraphicsTextItem* text = scene_->addText(speed_text);
+        
+        // フォントサイズを最小に調整
+        QFont font = text->font();
+        font.setPointSizeF(0.5);  // 固定で0.5ポイント（小さいサイズ）
+        text->setFont(font);
+        
+        // テキストの位置を設定（プロットの中央に重ねて配置）
+        QRectF text_rect = text->boundingRect();
+        double text_x = transformed_point.x() - text_rect.width() / 2;  // プロットの中央に水平位置合わせ
+        double text_y = transformed_point.y() - text_rect.height() / 2;  // プロットの中央に垂直位置合わせ
+        text->setPos(text_x, text_y);
+        
+        // テキスト色を設定（読みやすい色）
+        text->setDefaultTextColor(QColor(0, 0, 0));  // 黒色
+        text->setZValue(1);  // テキストをプロットより下に
+        text->setVisible(show_speed_text_);  // 表示フラグに従う
+        
+        speed_text_items_.push_back(text);
     }
 }
 
@@ -471,8 +507,31 @@ void GraphicsTrajectoryView::createTrajectoryItems2() {
         // クリック可能にする
         circle->setFlag(QGraphicsItem::ItemIsSelectable, true);
         circle->setData(0, static_cast<int>(i));  // インデックスを保存
+        circle->setZValue(2);  // テキストより上のレイヤー
         
         point_items_2_.push_back(circle);
+        
+        // 速度テキストを作成（プロットの左側に表示）
+        QString speed_text = QString::number(point.velocity, 'f', 1);  // 小数点第一位まで
+        QGraphicsTextItem* text = scene_->addText(speed_text);
+        
+        // フォントサイズを最小に調整
+        QFont font = text->font();
+        font.setPointSizeF(0.5);  // 固定で0.5ポイント（小さいサイズ）
+        text->setFont(font);
+        
+        // テキストの位置を設定（プロットの中央に重ねて配置）
+        QRectF text_rect = text->boundingRect();
+        double text_x = transformed_point.x() - text_rect.width() / 2;  // プロットの中央に水平位置合わせ
+        double text_y = transformed_point.y() - text_rect.height() / 2;  // プロットの中央に垂直位置合わせ
+        text->setPos(text_x, text_y);
+        
+        // テキスト色を設定（読みやすい色）
+        text->setDefaultTextColor(QColor(0, 0, 0));  // 黒色
+        text->setZValue(1);  // テキストをプロットより下に
+        text->setVisible(show_speed_text_);  // 表示フラグに従う
+        
+        speed_text_items_2_.push_back(text);
     }
 }
 
@@ -607,7 +666,7 @@ void GraphicsTrajectoryView::highlightPoint(size_t index, bool highlight) {
     QGraphicsEllipseItem* item = point_items_[index];
     
     if (highlight) {
-        QPen pen(QColor(255, 255, 0), 3);  // 黄色のハイライト
+        QPen pen(QColor(255, 255, 0), 1);  // 黄色の細い枠線
         item->setPen(pen);
     } else {
         // 枠線をなしに戻す
@@ -626,6 +685,12 @@ void GraphicsTrajectoryView::updateItemColors() {
         QColor color = getSpeedColor(points[i].velocity);
         point_items_[i]->setBrush(QBrush(color));
         point_items_[i]->setPen(QPen(Qt::NoPen));  // 枠線をなしに
+        
+        // 速度テキストも更新
+        if (i < speed_text_items_.size()) {
+            QString speed_text = QString::number(points[i].velocity, 'f', 1);
+            speed_text_items_[i]->setPlainText(speed_text);
+        }
     }
 }
 
@@ -749,6 +814,20 @@ QPointF GraphicsTrajectoryView::inverseTransformPoint(const QPointF& display_poi
         return QPointF(-display_point.x(), display_point.y());
     default:
         return display_point;
+    }
+}
+
+void GraphicsTrajectoryView::setSpeedTextVisible(bool visible) {
+    show_speed_text_ = visible;
+    
+    // 1つ目の軌跡の速度テキスト表示制御
+    for (auto* text : speed_text_items_) {
+        text->setVisible(visible);
+    }
+    
+    // 2つ目の軌跡の速度テキスト表示制御
+    for (auto* text : speed_text_items_2_) {
+        text->setVisible(visible);
     }
 }
 

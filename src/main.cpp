@@ -226,6 +226,10 @@ private slots:
         trajectory_view_->setBoundariesVisible(visible);
     }
     
+    void toggleSpeedText(bool visible) {
+        trajectory_view_->setSpeedTextVisible(visible);
+    }
+    
     void onCoordinateSystemChanged(int index) {
         trajectory_editor::GraphicsTrajectoryView::CoordinateSystem coord_system;
         QString message;
@@ -410,6 +414,7 @@ private:
     QDoubleSpinBox* point_size_spin_;
     QDoubleSpinBox* line_width_spin_;
     QCheckBox* boundaries_checkbox_;
+    QCheckBox* speed_text_checkbox_;
     QComboBox* coordinate_system_combo_;
     
     // 編集モード
@@ -747,6 +752,11 @@ private:
         boundaries_checkbox_->setChecked(true);
         display_layout->addWidget(boundaries_checkbox_);
         
+        // 速度テキスト表示
+        speed_text_checkbox_ = new QCheckBox("Show Speed Numbers");
+        speed_text_checkbox_->setChecked(false);  // デフォルトは非表示
+        display_layout->addWidget(speed_text_checkbox_);
+        
         // 座標系設定
         QHBoxLayout* coord_layout = new QHBoxLayout;
         QLabel* coord_label = new QLabel("Coordinate:");
@@ -800,6 +810,8 @@ private:
                 this, &TrajectoryEditor::onLineWidthChanged);
         connect(boundaries_checkbox_, &QCheckBox::toggled,
                 this, &TrajectoryEditor::toggleBoundaries);
+        connect(speed_text_checkbox_, &QCheckBox::toggled,
+                this, &TrajectoryEditor::toggleSpeedText);
         connect(coordinate_system_combo_, QOverload<int>::of(&QComboBox::currentIndexChanged),
                 this, &TrajectoryEditor::onCoordinateSystemChanged);
         
