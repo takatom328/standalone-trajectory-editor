@@ -1,200 +1,214 @@
-# Contributing to Standalone Trajectory Editor
+# Standalone Trajectory Editor への貢献
 
-Thank you for your interest in contributing to the Standalone Trajectory Editor! This document provides guidelines for contributing to the project.
+Standalone Trajectory Editor プロジェクトへの貢献にご興味をお持ちいただき、ありがとうございます！このドキュメントでは、プロジェクトへの貢献ガイドラインを提供します。
 
-## 🚀 Quick Start
+[English CONTRIBUTING](CONTRIBUTING_EN.md) | [日本語 CONTRIBUTING](CONTRIBUTING.md)
 
-1. **Fork** the repository
-2. **Clone** your fork locally
-3. **Create** a feature branch
-4. **Make** your changes
-5. **Test** your changes
-6. **Submit** a pull request
+## 🚀 クイックスタート
 
-## 🛠️ Development Setup
+1. リポジトリを**フォーク**
+2. ローカルに**クローン**
+3. フィーチャーブランチを**作成**
+4. 変更を**実装**
+5. 変更を**テスト**
+6. プルリクエストを**提出**
 
-### Prerequisites
-- Qt5 development libraries
+## 🛠️ 開発環境セットアップ
+
+### 前提条件
+- Qt5 開発ライブラリ
 - CMake 3.16+
-- C++17 compatible compiler
-- Linux environment (Ubuntu recommended)
+- C++17対応コンパイラ
+- Linux環境 (Ubuntu推奨)
 
-### Build Instructions
+### ビルド手順
 ```bash
-# Install dependencies
+# 依存関係インストール
 sudo apt-get install qt5-default cmake build-essential
 
-# Build project
+# プロジェクトビルド
 mkdir build && cd build
 cmake ..
 make -j$(nproc)
 ```
 
-## 📝 Code Style
+## 📝 コーディングスタイル
 
-### C++ Guidelines
-- Follow C++17 standards
-- Use meaningful variable and function names
-- Add comments for complex logic
-- Maintain consistent indentation (4 spaces)
+### C++ ガイドライン
+- C++17標準に準拠
+- 意味のある変数名・関数名を使用
+- 複雑なロジックにはコメントを追加
+- 一貫したインデント（4スペース）を維持
 
-### Qt Specifics
-- Use Qt naming conventions for signals/slots
-- Prefer modern Qt features (Qt5)
-- Memory management: use smart pointers where appropriate
+### Qt固有事項
+- シグナル・スロットにはQt命名規則を使用
+- モダンなQt機能を優先（Qt5）
+- メモリ管理：適切な場所でスマートポインタを使用
 
-### File Organization
+### ファイル構成
 ```
 src/
-├── core/     # Data structures and business logic
-├── gui/      # User interface components
-├── utils/    # Helper functions and utilities
-└── main.cpp  # Application entry point
+├── core/     # データ構造とビジネスロジック
+├── gui/      # ユーザーインターフェースコンポーネント
+├── utils/    # ヘルパー関数とユーティリティ
+└── main.cpp  # アプリケーションエントリーポイント
 ```
 
-## 🧪 Testing
+## 🧪 テスト
 
-### Manual Testing
-- Test with various CSV formats
-- Verify dual trajectory loading
-- Check editing operations (move, speed change)
-- Test pan/zoom functionality
-- Validate unit conversions (m/s ↔ km/h)
+### 手動テスト
+- 様々なCSV形式でテスト
+- デュアル軌跡ロードの確認
+- 編集操作（移動、速度変更）の検証
+- パン・ズーム機能のテスト
+- 単位変換 (m/s ↔ km/h) の検証
 
-### Test Data
-Use the provided sample files:
-- `data/raceline_awsim_15km.csv` - Standard format
-- `data/raceline_awsim_shortest_m_11.csv` - High-density data
-- `data/track_boundaries.csv` - Track boundaries
+### テストデータ
+提供されたサンプルファイルを使用：
+- `data/raceline_awsim_15km.csv` - 標準形式
+- `data/raceline_awsim_shortest_m_11.csv` - 高密度データ
+- `data/track_boundaries.csv` - トラック境界
 
-## 📋 Pull Request Process
+## 📋 プルリクエストプロセス
 
-### Before Submitting
-1. **Build successfully** on Linux
-2. **Test basic functionality** with sample data
-3. **Update documentation** if adding features
-4. **Follow commit message conventions**
+### 提出前のチェック
+1. Linuxで**正常にビルド**
+2. サンプルデータで**基本機能をテスト**
+3. 機能追加時は**ドキュメントを更新**
+4. **コミットメッセージ規約**に従う
 
-### Commit Messages
+### コミットメッセージ
 ```
-type(scope): brief description
+種類(スコープ): 簡潔な説明
 
-- Use present tense ("Add feature" not "Added feature")
-- Use imperative mood ("Move cursor to..." not "Moves cursor to...")
-- Limit first line to 72 characters
-- Reference issues with "Fixes #123" or "Closes #123"
-```
-
-Examples:
-```
-feat(gui): add middle mouse button panning
-fix(core): correct speed unit conversion in CSV loading
-docs(readme): update build instructions for Qt5
+- 現在形を使用（「機能を追加」ではなく「機能追加」）
+- 命令法を使用（「カーソルを移動...」ではなく「カーソル移動...」）
+- 最初の行は72文字以内
+- 「Fixes #123」や「Closes #123」でイシューを参照
 ```
 
-### Review Process
-1. Maintainers will review your PR
-2. Address any feedback or requested changes
-3. Once approved, your PR will be merged
-
-## 🐛 Bug Reports
-
-### Before Reporting
-- Check existing issues
-- Test with latest version
-- Prepare minimal reproduction case
-
-### Bug Report Template
+例：
 ```
-**Environment**
+feat(gui): 中マウスボタンパン機能を追加
+fix(core): CSV読み込み時の速度単位変換を修正
+docs(readme): Qt5用ビルド手順を更新
+```
+
+### レビュープロセス
+1. メンテナーがPRをレビュー
+2. フィードバックや変更要求に対応
+3. 承認後、PRがマージされます
+
+## 🐛 バグレポート
+
+### 報告前の確認
+- 既存のイシューをチェック
+- 最新バージョンでテスト
+- 最小再現ケースを準備
+
+### バグレポートテンプレート
+```
+**環境**
 - OS: Ubuntu 20.04
-- Qt Version: 5.12.8
-- Compiler: GCC 9.4.0
+- Qtバージョン: 5.12.8
+- コンパイラ: GCC 9.4.0
 
-**Steps to Reproduce**
-1. Load CSV file...
-2. Click on point...
-3. Error occurs...
+**再現手順**
+1. CSVファイルを読み込み...
+2. 点をクリック...
+3. エラーが発生...
 
-**Expected Behavior**
-[What you expected to happen]
+**期待される動作**
+[期待していた動作]
 
-**Actual Behavior**
-[What actually happened]
+**実際の動作**
+[実際に起こった動作]
 
-**Sample Data**
-[Attach CSV file if relevant]
+**サンプルデータ**
+[関連する場合はCSVファイルを添付]
 ```
 
-## 💡 Feature Requests
+## 💡 機能要求
 
-### Feature Request Template
+### 機能要求テンプレート
 ```
-**Feature Description**
-[Clear description of the feature]
+**機能説明**
+[機能の明確な説明]
 
-**Use Case**
-[Why this feature would be useful]
+**使用ケース**
+[この機能が有用な理由]
 
-**Proposed Implementation**
-[Optional: how you think it could be implemented]
+**実装案**
+[オプション：実装方法の提案]
 
-**Alternatives Considered**
-[Other solutions you've considered]
+**検討した代替案**
+[検討した他の解決策]
 ```
 
-## 🎯 Areas for Contribution
+## 🎯 貢献分野
 
-### High Priority
-- [ ] Performance optimization for large datasets
-- [ ] Additional CSV format support
-- [ ] Improved error handling and user feedback
-- [ ] Cross-platform compatibility (Windows, macOS)
+### 高優先度
+- [ ] 大規模データセットのパフォーマンス最適化
+- [ ] 追加CSV形式サポート
+- [ ] エラーハンドリングとユーザーフィードバックの改善
+- [ ] クロスプラットフォーム対応（Windows、macOS）
 
-### Medium Priority
-- [ ] 3D visualization capabilities
-- [ ] Animation/playback features
-- [ ] Plugin architecture
-- [ ] Internationalization (i18n)
+### 中優先度
+- [ ] 3D可視化機能
+- [ ] アニメーション・再生機能
+- [ ] プラグインアーキテクチャ
+- [ ] 国際化対応 (i18n)
 
-### Low Priority
-- [ ] Dark theme support
-- [ ] Keyboard shortcuts
-- [ ] Export to other formats (KML, GPX)
-- [ ] Unit tests and continuous integration
+### 低優先度
+- [ ] ダークテーマサポート
+- [ ] キーボードショートカット
+- [ ] 他形式へのエクスポート（KML、GPX）
+- [ ] ユニットテストと継続的インテグレーション
 
-## 📚 Resources
+## 📚 リソース
 
-### Qt Documentation
-- [Qt5 Documentation](https://doc.qt.io/qt-5/)
-- [Qt Graphics View Framework](https://doc.qt.io/qt-5/graphicsview.html)
+### Qt ドキュメント
+- [Qt5 ドキュメント](https://doc.qt.io/qt-5/)
+- [Qt Graphics View フレームワーク](https://doc.qt.io/qt-5/graphicsview.html)
 
-### C++ Resources
-- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/)
-- [Modern C++ Features](https://github.com/AnthonyCalandra/modern-cpp-features)
+### C++ リソース
+- [C++ コアガイドライン](https://isocpp.github.io/CppCoreGuidelines/)
+- [モダンC++機能](https://github.com/AnthonyCalandra/modern-cpp-features)
 
-## 🤝 Code of Conduct
+## 🤝 行動規範
 
-### Our Standards
-- Be respectful and inclusive
-- Focus on constructive feedback
-- Help others learn and grow
-- Maintain professional communication
+### 基準
+- 敬意を持ち、包括的であること
+- 建設的なフィードバックに焦点を当てる
+- 他者の学習と成長を支援する
+- プロフェッショナルなコミュニケーションを維持
 
-### Enforcement
-Maintainers have the right to remove, edit, or reject contributions that don't align with these standards.
+### 実施
+メンテナーは、これらの基準に沿わない貢献を削除、編集、または拒否する権利を有します。
 
-## 📞 Getting Help
+## 📞 サポート
 
-- **Issues**: Use GitHub Issues for bugs and feature requests
-- **Discussions**: Use GitHub Discussions for questions and ideas
-- **Code Review**: Comment on pull requests for implementation feedback
+- **イシュー**: バグと機能要求にはGitHub Issuesを使用
+- **ディスカッション**: 質問とアイデアにはGitHub Discussionsを使用
+- **コードレビュー**: 実装フィードバックにはプルリクエストにコメント
 
-## 🙏 Recognition
+## 🙏 貢献者の認識
 
-Contributors will be acknowledged in:
-- Release notes
-- CONTRIBUTORS.md file (if created)
-- Project documentation
+貢献者は以下で認識されます：
+- リリースノート
+- CONTRIBUTORS.mdファイル（作成された場合）
+- プロジェクトドキュメント
 
-Thank you for helping make this project better! 🚀
+## 🌸 日本語コミュニティ
+
+### 日本語での貢献について
+- 日本語でのイシュー・プルリクエストも歓迎
+- コメントやドキュメントは日本語・英語どちらでも可
+- 日本の自動車・ロボティクス業界での活用事例も募集
+
+### 日本語リソース
+- [Qt日本語ドキュメント](https://doc.qt.io/qt-5.15/index.html)
+- [C++日本語リファレンス](https://cpprefjp.github.io/)
+- [Autoware日本語ドキュメント](https://autoware.org/ja/)
+
+プロジェクトをより良くするためのご協力をありがとうございます！🚀

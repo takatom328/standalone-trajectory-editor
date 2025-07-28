@@ -1,201 +1,234 @@
 # Standalone Trajectory Editor
 
-A visual trajectory editing application for automotive/robotics applications, designed as an independent tool extracted from Autoware's trajectory editing capabilities.
+自動車・ロボティクス分野向けの軌跡編集アプリケーション。Autowareの軌跡編集機能をベースに独立したツールとして開発されました。
 
-## 🚗 Overview
+[English README](README_EN.md) | [日本語 README](README.md)
 
-This standalone application provides intuitive visual editing of CSV trajectory data using Qt GraphicsView. It supports dual trajectory comparison, speed visualization with color coding, and interactive editing operations.
+## 🚗 概要
 
-## ✨ Key Features
+このスタンドアロンアプリケーションは、Qt GraphicsViewを使用してCSV軌跡データを直感的に視覚編集できます。デュアル軌跡比較、速度の色分け表示、インタラクティブな編集操作をサポートしています。
 
-### 🎯 Trajectory Editing
-- **Dual Trajectory Support**: Load and compare two CSV trajectories simultaneously
-- **Color-coded Speed Display**: Green system for trajectory 1, Blue system for trajectory 2
-- **Unit Conversion**: Internal storage in m/s, UI display in km/h
-- **Multiple CSV Formats**: Supports both 4-column (x,y,z,velocity) and 8-column (x,y,z,qx,qy,qz,qw,speed) formats
-- **Point Editing**: Click and drag points to modify trajectory coordinates
-- **Speed Editing**: Individual point and range velocity editing
-- **Edit History**: Undo/Redo functionality with command pattern
+## ✨ 主要機能
 
-### 🗺️ Track Visualization
-- **Track Boundaries**: Display left/right boundaries as gray points
-- **Coordinate Systems**: East-North, East-South, South-West, North-West support
-- **Auto-fit**: Automatic view adjustment when changing coordinate systems
-- **Zoom Persistence**: Maintains zoom level during trajectory editing
+### 🎯 軌跡編集
+- **デュアル軌跡対応**: 2つのCSV軌跡を同時読み込み・比較
+- **色分け速度表示**: 軌跡1は緑系、軌跡2は青系で表示
+- **単位変換**: 内部はm/s保存、UIはkm/h表示
+- **複数CSV形式**: 4列形式(x,y,z,velocity)と8列形式(x,y,z,qx,qy,qz,qw,speed)に対応
+- **点編集**: クリック&ドラッグで軌跡座標の修正
+- **速度編集**: 個別点および範囲での速度編集
+- **編集履歴**: コマンドパターンによるUndo/Redo機能
 
-### 🖱️ Interactive Controls
-- **Mouse Operations**:
-  - **Left Click**: Select and edit trajectory points
-  - **Middle Click + Drag**: Pan view to explore track areas
-  - **Mouse Wheel**: Zoom in/out
-  - **Drag Points**: Move trajectory points with 5-pixel sensitivity
-- **Keyboard Shortcuts**: Standard zoom and fit operations
-- **Responsive UI**: Optimized for high-density trajectory data
+### 🗺️ トラック可視化
+- **トラック境界**: 左右境界をグレー点で表示
+- **座標系対応**: 東北・東南・南西・北西の4種類
+- **自動フィット**: 座標系変更時の自動ビュー調整
+- **ズーム維持**: 軌跡編集中のズームレベル保持
 
-### 🎨 Visual Customization
-- **Point Size**: Adjustable from 0.5 to larger sizes
-- **Line Width**: Configurable trajectory line thickness
-- **No Outlines**: Clean point display without borders
-- **Speed Color Mapping**: Customizable min/mid/max speed ranges
+### 🖱️ インタラクティブ操作
+- **マウス操作**:
+  - **左クリック**: 軌跡点の選択・編集
+  - **中ボタン+ドラッグ**: ビューのパン移動
+  - **マウスホイール**: ズームイン・アウト
+  - **点ドラッグ**: 5ピクセル感度での軌跡点移動
+- **キーボードショートカット**: 標準的なズーム・フィット操作
+- **レスポンシブUI**: 高密度軌跡データに最適化
 
-## 🏗️ Architecture
+### 🎨 表示カスタマイズ
+- **点サイズ**: 0.5から大サイズまで調整可能
+- **線幅**: 軌跡線の太さ設定
+- **枠線なし**: すっきりとした点表示
+- **速度色マッピング**: 最小/中間/最大速度範囲のカスタマイズ
+
+## 🏗️ アーキテクチャ
 
 ```
 src/
-├── core/                    # Data Management
-│   ├── trajectory_data.hpp/.cpp    # Trajectory data structure
-│   ├── track_boundaries.hpp/.cpp   # Track boundary data
-│   └── edit_history.hpp/.cpp       # Command pattern editing
-├── gui/                     # User Interface
-│   └── graphics_trajectory_view.hpp/.cpp  # Qt GraphicsView display
-├── utils/                   # Utilities
-│   ├── csv_parser.hpp/.cpp         # CSV file handling
-│   └── osm_parser.hpp/.cpp         # OSM/Lanelet2 parsing
-└── main.cpp                 # Main application
+├── core/                    # データ管理
+│   ├── trajectory_data.hpp/.cpp    # 軌跡データ構造
+│   ├── track_boundaries.hpp/.cpp   # トラック境界データ
+│   └── edit_history.hpp/.cpp       # コマンドパターン編集
+├── gui/                     # ユーザーインターフェース
+│   └── graphics_trajectory_view.hpp/.cpp  # Qt GraphicsView表示
+├── utils/                   # ユーティリティ
+│   ├── csv_parser.hpp/.cpp         # CSVファイル処理
+│   └── osm_parser.hpp/.cpp         # OSM/Lanelet2解析
+└── main.cpp                 # メインアプリケーション
 ```
 
-## 🔧 Technical Specifications
+## 🔧 技術仕様
 
-### Development Environment
-- **Language**: C++17
-- **GUI Framework**: Qt5 (Core, Widgets)
-- **Build System**: CMake 3.16+
-- **Platform**: Linux (tested on Ubuntu)
+### 開発環境
+- **言語**: C++17
+- **GUIフレームワーク**: Qt5 (Core, Widgets)
+- **ビルドシステム**: CMake 3.16+
+- **プラットフォーム**: Linux (Ubuntu で動作確認)
 
-### Dependencies
+### 依存関係
 - Qt5 Core & Widgets
 - CMake 3.16+
-- C++ Standard Library
+- C++ 標準ライブラリ
 
-## 📁 Data Formats
+## 📁 データ形式
 
-### Trajectory Data (CSV)
+### 軌跡データ (CSV)
 ```csv
-# 4-column format
+# 4列形式
 x,y,z,velocity_ms
 89626.42,43187.84,6.5,2.777
 
-# 8-column format (AWSIM)
+# 8列形式 (AWSIM)
 x,y,z,qx,qy,qz,qw,speed
 89631.12,43131.45,0,0,0,0.893,0.449,9.72222
 ```
 
-### Track Boundaries (CSV)
+### トラック境界 (CSV)
 ```csv
 left_x,left_y,left_z,right_x,right_y,right_z
 89684.1,43139.7,6.5,89682.9,43141.4,6.5
 ```
 
-## 🔨 Build Instructions
+## 🔨 ビルド手順
 
 ```bash
-# Install dependencies (Ubuntu/Debian)
+# 依存関係インストール (Ubuntu/Debian)
 sudo apt-get update
 sudo apt-get install qt5-default cmake build-essential
 
-# Clone and build
-git clone [repository-url]
+# クローンとビルド
+git clone https://github.com/takatom328/standalone-trajectory-editor.git
 cd standalone-trajectory-editor
 mkdir build && cd build
 cmake ..
 make -j$(nproc)
 
-# Run
+# 実行
 ./trajectory_editor
 ```
 
-## 🎮 Usage Guide
+## 🎮 使用方法
 
-### Basic Operations
+### 基本操作
 
-1. **Load Trajectories**:
-   - Green trajectory: Use "Load CSV 1" button
-   - Blue trajectory: Use "Load CSV 2" button
-   - Files are displayed with color-coded indicators
+1. **軌跡の読み込み**:
+   - 緑軌跡: 「Load CSV 1」ボタン使用
+   - 青軌跡: 「Load CSV 2」ボタン使用
+   - ファイル名は色分けされた表示
 
-2. **Navigation**:
-   - **Pan**: Middle mouse button + drag
-   - **Zoom**: Mouse wheel
-   - **Fit View**: Use coordinate system dropdown to auto-fit
+2. **ナビゲーション**:
+   - **パン**: 中マウスボタン + ドラッグ
+   - **ズーム**: マウスホイール
+   - **ビューフィット**: 座標系ドロップダウンで自動フィット
 
-3. **Edit Trajectories**:
-   - **Select Point**: Left click on trajectory point (5px sensitivity)
-   - **Move Point**: Drag selected point to new position
-   - **Edit Speed**: Use velocity editor panel for individual or range editing
+3. **軌跡編集**:
+   - **点選択**: 軌跡点を左クリック (5px感度)
+   - **点移動**: 選択した点をドラッグで新位置へ移動
+   - **速度編集**: 速度編集パネルで個別または範囲編集
 
-4. **Visual Controls**:
-   - **Point Size**: Adjust from 0.5 for dense trajectories
-   - **Line Width**: Modify trajectory line thickness
-   - **Coordinate System**: Switch between East-North, East-South, etc.
+4. **表示制御**:
+   - **点サイズ**: 高密度軌跡用に0.5から調整
+   - **線幅**: 軌跡線の太さを変更
+   - **座標系**: 東北・東南などに切り替え
 
-5. **Save Results**:
-   - "Save CSV 1" / "Save CSV 2": Save trajectories separately in m/s units
+5. **結果保存**:
+   - 「Save CSV 1」/「Save CSV 2」: 軌跡を個別にm/s単位で保存
 
-### Advanced Features
+### 高度な機能
 
-- **Zoom Maintenance**: Zoom level persists during point editing
-- **Dual Comparison**: Load two trajectories for side-by-side analysis
-- **High-Density Support**: Optimized for files like `raceline_awsim_shortest_m_11.csv`
-- **Filename Display**: Current loaded files shown in control panel
+- **ズーム維持**: 点編集中もズームレベルが維持される
+- **デュアル比較**: 2つの軌跡を並べて解析
+- **高密度対応**: `raceline_awsim_shortest_m_11.csv`などの大容量ファイルに最適化
+- **ファイル名表示**: 読み込み中のファイル名をコントロールパネルに表示
 
-## 📊 Performance
+## 📊 パフォーマンス
 
-### Tested Datasets
-- **Dense Trajectories**: 1000+ points (raceline_awsim_shortest_m_11.csv)
-- **Track Boundaries**: 268+ boundary points
-- **Real-time Response**: Smooth interaction even with high-density data
+### テスト済みデータセット
+- **高密度軌跡**: 1000+点 (raceline_awsim_shortest_m_11.csv)
+- **トラック境界**: 268+境界点
+- **リアルタイム応答**: 高密度データでもスムーズな操作
 
-### Coordinate Range (Example)
-- **X-axis**: 89612.7 ~ 89686.7
-- **Y-axis**: 43116.6 ~ 43193.1  
-- **Z-axis**: Typically 6.5m (ground level)
+### 座標範囲例
+- **X軸**: 89612.7 ~ 89686.7
+- **Y軸**: 43116.6 ~ 43193.1  
+- **Z軸**: 通常6.5m (地面レベル)
 
-## 🚀 Future Enhancements
+## 🚀 今後の機能拡張
 
-### Planned Features
-- [ ] 3D visualization support
-- [ ] Spline interpolation for smooth trajectories
-- [ ] Animation/playback functionality
-- [ ] Export to KML/GPX formats
-- [ ] ROSbag integration
+### 予定機能
+- [ ] 3D可視化サポート
+- [ ] スプライン補間による滑らかな軌跡
+- [ ] アニメーション・再生機能
+- [ ] KML/GPX形式エクスポート
+- [ ] ROSbag統合
 
-### UI Improvements
-- [ ] Dark theme support
-- [ ] Configurable color schemes
-- [ ] Multi-language support
-- [ ] Plugin architecture
+### UI改善
+- [ ] ダークテーマサポート
+- [ ] 設定可能なカラースキーム
+- [ ] 多言語サポート
+- [ ] プラグインアーキテクチャ
 
-## 📝 License
+## 📝 ライセンス
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+このプロジェクトはMITライセンスの下で公開されています - 詳細は[LICENSE](LICENSE)ファイルをご覧ください。
 
-## 🤝 Contributing
+## 🤝 コントリビューション
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+1. リポジトリをフォーク
+2. フィーチャーブランチを作成
+3. 変更を実装
+4. テスト追加（該当する場合）
+5. プルリクエストを提出
 
-## 🐛 Bug Reports
+詳細な貢献ガイドラインは[CONTRIBUTING.md](CONTRIBUTING.md)をご覧ください。
 
-Please report issues through GitHub Issues with:
-- Operating system and version
-- Qt version
-- Steps to reproduce
-- Sample data files (if applicable)
+## 🐛 バグレポート
 
-## 📈 Development Status
+以下の情報を含めてGitHub Issuesでバグを報告してください：
+- オペレーティングシステムとバージョン
+- Qtバージョン
+- 再現手順
+- サンプルデータファイル（該当する場合）
 
-**Current Version**: Prototype v1.0
-- ✅ Core trajectory editing
-- ✅ Dual trajectory support  
-- ✅ Interactive pan/zoom
-- ✅ Speed visualization
-- ✅ Unit conversion (m/s ↔ km/h)
-- ✅ Command pattern editing
-- ✅ Multiple CSV format support
+## 📈 開発状況
+
+**現在のバージョン**: プロトタイプ v1.0
+- ✅ コア軌跡編集機能
+- ✅ デュアル軌跡サポート  
+- ✅ インタラクティブパン・ズーム
+- ✅ 速度可視化
+- ✅ 単位変換 (m/s ↔ km/h)
+- ✅ コマンドパターン編集
+- ✅ 複数CSV形式サポート
+
+## 🌟 活用例
+
+### 自動車分野
+- **経路計画**: 自動運転車の軌跡最適化
+- **テストコース解析**: サーキット・テストコースでの車両軌跡分析
+- **速度プロファイル調整**: コーナリング・直線での最適速度設定
+
+### ロボティクス分野
+- **ナビゲーション**: 移動ロボットの経路計画
+- **マッピング**: SLAM軌跡データの可視化・編集
+- **動作最適化**: ロボットアームの軌道生成
+
+### 研究・教育
+- **アルゴリズム検証**: 経路計画アルゴリズムの結果可視化
+- **データ解析**: 実験データの後処理・分析
+- **デモンストレーション**: 軌跡データの分かりやすい表示
+
+## 📚 関連リソース
+
+### 技術ドキュメント
+- [Qt5ドキュメント](https://doc.qt.io/qt-5/)
+- [Qt Graphics Viewフレームワーク](https://doc.qt.io/qt-5/graphicsview.html)
+- [C++コアガイドライン](https://isocpp.github.io/CppCoreGuidelines/)
+
+### 応用分野
+- [Autoware](https://autoware.org/) - オープンソース自動運転プラットフォーム
+- [ROS](https://www.ros.org/) - ロボットオペレーティングシステム
+- [AWSIM](https://tier4.github.io/AWSIM/) - Autoware用シミュレータ
 
 ---
 
-*Generated with Claude Code* 🤖
+*Claude Codeで生成* 🤖
