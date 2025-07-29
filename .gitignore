@@ -62,6 +62,7 @@ Desktop.ini
 # Core dumps
 core
 core.*
+!src/core/
 
 # Data files (optional - uncomment if you want to exclude data)
 # data/*.csv
