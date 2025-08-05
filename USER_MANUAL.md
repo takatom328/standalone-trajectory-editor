@@ -186,3 +186,189 @@ x,y,z,velocity
 ---
 
 *このマニュアルは軌跡エディタ v1.0.0 用です。*
+
+
+
+Trajectory Editor User Manual
+Overview
+
+The Trajectory Editor is a Qt5-based tool for graphically editing autonomous vehicle trajectory data (CSV format). It provides the ability to move, add, and delete trajectory points, edit speed, and undo/redo functions.
+List of Features
+Basic Features
+
+📂 Loading and Saving CSV Files
+🎯 Selecting and Moving Trajectory Points (Drag & Drop)
+➕ Adding Trajectory Points
+❌ Deleting Trajectory Points
+⚡ Speed Editing (Single Point/Range Editing)
+↩️ Undo/Redo Function (Up to 50 Times)
+🔍 Zooming and Panning
+🏁 Track Boundary Display
+
+Display Features
+
+Color-Coded Display Based on Speed (Blue: Slow → Green: Medium → Red: Fast)
+Adjusting Point Size and Line Width
+Displaying Trajectory Information
+
+Starting
+
+cd /path/to/standalone-trajectory-editor/build
+./trajectory_editor
+
+Basic Operations
+1. File Operations
+Loading CSV Files
+
+Click the "Open CSV" button
+Select a trajectory data file (CSV format)
+The trajectory will be displayed if the file is loaded successfully.
+
+CSV file format:
+
+x,y,z,velocity
+100.0,200.0,0.0,25.5
+101.2,201.1,0.0,26.0
+...
+
+Saving a CSV file
+
+Click the "Save CSV" button.
+Specify the save location and file name.
+The edited trajectory data will be saved.
+
+2. Editing Mode
+View Mode (Standard Mode)
+
+Purpose: Select, move, or delete trajectory points.
+Operations:
+Left-click: Select a point (highlighted in yellow).
+Drag: Move the selected point.
+Right-click: Delete a point.
+Click on the background: Deselect.
+
+Add Points Mode (Add Mode)
+
+Purpose: Add a new trajectory point.
+Operations:
+Left-click: Add a new point at the clicked location.
+The point will automatically be inserted in the appropriate position.
+
+3. Speed Editing
+Single-Point Speed Editing
+
+Select a trajectory point in View Mode.
+Adjust the speed value in the Point Speed field. Click the "Apply" button to apply.
+Click the "Clear" button to deselect.
+
+Range Speed Editing
+
+Enter the starting index in the From field.
+Enter the ending index in the To field.
+Enter the desired speed in the Range Speed field.
+Click the "Apply Range" button to apply the range.
+
+4. Display Controls
+Zoom/Pan
+
+Mouse Wheel: Zoom in/out
+Fit All: Fit the entire track to the screen
+Zoom In/Out: Zoom using the buttons
+Reset Zoom: Reset the zoom
+
+Display Settings
+
+Point Size: Adjusts the size of the track points (1-20)
+Line Width: Adjusts the thickness of the track lines (1-10)
+Show Track Boundaries: Show/hide track boundaries
+
+5. Edit History
+Undo/Redo Function
+
+"Undo": Undo the most recent edit
+"Redo": Redo an undone operation
+Up to 50 edit history entries are maintained
+Hover over the button to display the operation details
+
+Keyboard Shortcuts
+Operation Shortcuts
+Open File Ctrl+O
+Save File Ctrl+S
+Undo Ctrl+Z
+Redo Ctrl+Y
+Zoom In Ctrl++
+Zoom Out Ctrl+-
+Color-Coded Display
+
+Trajectory points are color-coded according to speed:
+
+🔵 Blue: Slow Speed (Default: 0-20 km/h)
+🟢 Green: Medium Speed (Default: 20-40 km/h)
+🔴 Red: Fast Speed (Default: 40+ km/h)
+
+Troubleshooting
+Common Issues
+Q: I can't move a trail point
+
+A: Please check the following:
+
+Whether the View Mode is selected
+Whether you clicked close to the trail point (within 15 pixels)
+Whether the CSV file was loaded correctly
+
+Q: I can't load a CSV file
+
+A: Please check the following:
+
+Whether the file format is correct (x, y, z, and velocity columns are required)
+Whether the file path contains Japanese characters
+Whether you have read permission for the file
+
+Q: Undo/Redo doesn't work
+
+A:
+
+The Undo/Redo buttons are only enabled after an edit operation has been performed.
+A history is maintained for up to 50 edits.
+
+Q: Speed edits aren't reflected.
+
+A:
+
+Make sure a track point is selected.
+Make sure you clicked the "Apply" button.
+For range edits, make sure the start and end indices are correct.
+
+File Format Specifications
+Input CSV File
+
+x,y,z,velocity
+# x: X coordinate (meters)
+# y: Y coordinate (meters)
+# z: Z coordinate (meters, usually 0.0)
+# velocity: Speed (km/h)
+
+Example
+
+x,y,z,velocity
+3725.71,-124.15,0.0,20.0
+3725.85,-123.05,0.0,22.5
+3726.12,-121.98,0.0,25.0
+
+System Requirements
+
+OS: Linux/Windows/macOS
+Qt: 5.12 or higher
+C++: C++17-compatible compiler
+Memory: Minimum 512MB
+
+Version Information
+
+Version: 1.0.0
+Build Date: January 2025
+License: MIT License
+
+Support
+For technical issues or questions, please create an issue in the project's GitHub repository.
+
+

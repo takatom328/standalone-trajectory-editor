@@ -100,6 +100,7 @@ git clone https://github.com/takatom328/standalone-trajectory-editor.git
 cd standalone-trajectory-editor
 mkdir build && cd build
 cmake ..
+cd ..
 make -j$(nproc)
 
 # 実行
