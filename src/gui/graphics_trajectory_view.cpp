@@ -193,7 +193,7 @@ void GraphicsTrajectoryView::mousePressEvent(QMouseEvent* event) {
         case SELECTING: {
             size_t index = findNearestPointIndex(scene_pos);
             // クリック判定の許容距離（点のサイズに応じて調整、最小5ピクセル確保）
-            const double CLICK_TOLERANCE = std::max(5.0, point_size_ * 5.0);
+            const double CLICK_TOLERANCE = std::max(10.0, point_size_ * 5.0);
             
             if (index < trajectory_data_->size()) {
                 const auto& point = trajectory_data_->getPoints()[index];
