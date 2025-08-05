@@ -98,6 +98,7 @@ git clone [repository-url]
 cd standalone-trajectory-editor
 mkdir build && cd build
 cmake ..
+cd ..
 make -j$(nproc)
 
 # Run
